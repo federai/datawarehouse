@@ -1,0 +1,1611 @@
+swagger: '2.0'
+info:
+  description: Aplicación dirigida a compañías de Marketing para administrar todos los contactos de sus clientes para sus campañas.
+  version: 1.0.0
+  title: Data Warehouse
+  contact:
+    email: fraimondovargas@gmail.com
+tags:
+  - name: usuarios
+    description: Operaciones sobre usuarios
+  - name: regiones
+    description: Operaciones sobre regiones
+  - name: paises
+    description: Operaciones sobre países
+  - name: ciudades
+    description: Operaciones sobre ciudades
+  - name: companias
+    description: Operaciones sobre compañías
+  - name: contactos
+    description: Operaciones sobre contactos
+  - name: canales
+    description: Operaciones sobre canales
+    
+schemes:
+  - https
+  - http
+paths:
+  /usuarios/registro:
+    post:
+      tags:
+        - usuarios
+      summary: Crear usuario
+      operationId: createUser
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: |-
+            Crear usuario. Perfil puede ser: 
+             1 (administrador),  
+             0 (perfil básico)
+          required: true
+          schema:
+            $ref: '#/definitions/Register'
+      responses:
+        '201':
+          description: Successful Register
+          schema:
+            $ref: '#/definitions/RegisterResponse'
+        '400':
+          description: Unsuccessful Register
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 400
+              message:
+                type: string
+                example: User already exists
+  /usuarios/login:
+    post:
+      tags:
+        - usuarios
+      summary: Iniciar sesión
+      operationId: loginUser
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Login usuario.
+          required: true
+          schema:
+            $ref: '#/definitions/Login'
+      responses:
+        '200':
+          description: Successful login
+          schema:
+            $ref: '#/definitions/LoginResponse'
+        '400':
+          description: Unsuccessful login
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 400
+              message:
+                type: string
+                example: Incorrect user or password
+  /usuarios:
+    get:
+      tags:
+        - usuarios
+      summary: Ver todos los usuarios (admin)
+      operationId: getUsers
+      produces:
+        - application/json
+      parameters:
+        - name: User token
+          in: header
+          required: true
+          type: string
+          description: User JWT token (Bearer)
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: array
+            items: 
+              $ref: '#/definitions/GetUsers'
+        '400':
+          description: Unsuccessful
+          schema:
+            $ref: '#/definitions/Authenticate'
+        '403':
+          description: Forbidden
+          schema:
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 403
+              message:
+                type: string
+                example: Forbidden
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 404
+  /usuarios/{id}:
+    get:
+      tags:
+        - usuarios
+      summary: Ver un sólo usuario (admin)
+      operationId: getUser
+      produces:
+        - application/json
+      parameters:
+        - name: User token
+          in: header
+          required: true
+          type: string
+          description: User JWT token (Bearer)
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Numeric ID of the user.
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GetUser'
+        '400':
+          description: Unsuccessful
+          schema:
+            $ref: '#/definitions/Authenticate'
+        '403':
+          description: Forbidden
+          schema:
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 403
+              message:
+                type: string
+                example: Forbidden
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 404
+    patch:
+      tags:
+        - usuarios
+      summary: Editar usuario (admin)
+      operationId: updateUser
+      produces:
+        - application/json
+      parameters:
+        - name: User token
+          in: header
+          required: true
+          type: string
+          description: User JWT token (Bearer)
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Numeric ID of the user to update.
+        - in: body
+          name: body
+          description: >-
+            Editar usuario
+          required: true
+          schema:
+            $ref: '#/definitions/UpdateUser'
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            properties:
+              message:
+                type: string
+                example: Usuario editado
+        '400':
+          description: Unsuccessful
+          schema:
+            $ref: '#/definitions/Authenticate'
+        '403':
+          description: Forbidden
+          schema:
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 403
+              message:
+                type: string
+                example: Forbidden
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 404
+    delete: 
+      tags:
+        - usuarios
+      summary: Eliminar usuario (admin)
+      operationId: deleteProduct
+      produces:
+        - application/json
+      parameters:
+        - name: User token
+          in: header
+          required: true
+          type: string
+          description: User JWT token (Bearer)
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Numeric ID of the user to delete.
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+           properties:
+              message:
+                type: string
+                example: Usuario eliminado
+        '400':
+          description: Unsuccessful
+          schema:
+            $ref: '#/definitions/Authenticate'
+        '403':
+          description: Forbidden
+          schema:
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 403
+              message:
+                type: string
+                example: Forbidden
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 404
+  /companias:
+    get: 
+      tags:
+        - companias
+      summary: Ver compañías
+      operationId: getCompanias
+      produces:
+        - application/json
+      parameters:
+        - name: User token
+          in: header
+          required: true
+          type: string
+          description: User JWT token (Bearer)
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GetCompanias'
+        '400':
+          description: Unsuccessful
+          schema:
+            $ref: '#/definitions/Authenticate'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 404
+    post:
+      tags:
+        - companias
+      summary: Crear compañía
+      operationId: createCompania
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Crear compañía
+          required: true
+          schema:
+            $ref: '#/definitions/CreateCompanias'
+      responses:
+        '200':
+          description: Successful Register
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Compañía agregada
+        '400':
+          description: Unsuccessful Register
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 400
+              message:
+                type: string
+                example: Compañía ya guardada
+  /companias/{id}:
+    get:
+      tags:
+        - companias
+      summary: Ver una sola compañía
+      operationId: getCompania
+      produces:
+        - application/json
+      parameters:
+        - name: User token
+          in: header
+          required: true
+          type: string
+          description: User JWT token (Bearer)
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Numeric ID of the company.
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GetCompanias'
+        '400':
+          description: Unsuccessful
+          schema:
+            $ref: '#/definitions/Authenticate'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 404
+    patch:
+      tags:
+        - companias
+      summary: Editar compañía
+      operationId: updateComp
+      produces:
+        - application/json
+      parameters:
+        - name: User token
+          in: header
+          required: true
+          type: string
+          description: User JWT token (Bearer)
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Numeric ID of the company to update.
+        - in: body
+          name: body
+          description: >-
+            Editar compañía
+          required: true
+          schema:
+            $ref: '#/definitions/CreateCompanias'
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            properties:
+              message:
+                type: string
+                example: Compañia actualizada
+        '400':
+          description: Unsuccessful
+          schema:
+            $ref: '#/definitions/Authenticate'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 404
+    delete: 
+      tags:
+        - companias
+      summary: Eliminar compañía
+      operationId: deleteComp
+      produces:
+        - application/json
+      parameters:
+        - name: User token
+          in: header
+          required: true
+          type: string
+          description: User JWT token (Bearer)
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Numeric ID of the company to delete.
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Compañía eliminada
+        '400':
+          description: Unsuccessful
+          schema:
+            $ref: '#/definitions/Authenticate'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 404                
+                
+  /regiones:
+    get: 
+      tags:
+        - regiones
+      summary: Ver regiones
+      operationId: getRegiones
+      produces:
+        - application/json
+      parameters:
+        - name: User token
+          in: header
+          required: true
+          type: string
+          description: User JWT token (Bearer)
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GetRegiones'
+        '400':
+          description: Unsuccessful
+          schema:
+            $ref: '#/definitions/Authenticate'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 404
+    post:
+      tags:
+        - regiones
+      summary: Crear región
+      operationId: createRegion
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Crear región
+          required: true
+          schema:
+            $ref: '#/definitions/CreateRegion'
+      responses:
+        '200':
+          description: Successful Register
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Región agregada
+        '400':
+          description: Unsuccessful Register
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 400
+              message:
+                type: string
+                example: Región ya guardada
+                
+  /regiones/{id}:
+    patch:
+      tags:
+        - regiones
+      summary: Editar región
+      operationId: updateRegion
+      produces:
+        - application/json
+      parameters:
+        - name: User token
+          in: header
+          required: true
+          type: string
+          description: User JWT token (Bearer)
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Numeric ID of the region to update.
+        - in: body
+          name: body
+          description: >-
+            Editar región
+          required: true
+          schema:
+            $ref: '#/definitions/CreateRegion'
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            properties:
+              message:
+                type: string
+                example: Región actualizada
+        '400':
+          description: Unsuccessful
+          schema:
+            $ref: '#/definitions/Authenticate'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 404
+    delete: 
+      tags:
+        - regiones
+      summary: Eliminar región
+      operationId: deleteRegion
+      produces:
+        - application/json
+      parameters:
+        - name: User token
+          in: header
+          required: true
+          type: string
+          description: User JWT token (Bearer)
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Numeric ID of the region to delete.
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Región eliminada
+        '400':
+          description: Unsuccessful
+          schema:
+            $ref: '#/definitions/Authenticate'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 404     
+    
+  /paises: 
+    post:
+      tags:
+        - paises
+      summary: Crear país
+      operationId: createPaís
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Crear país
+          required: true
+          schema:
+            $ref: '#/definitions/CreatePais'
+      responses:
+        '200':
+          description: Successful Register
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: País agregado
+        '400':
+          description: Unsuccessful Register
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 400
+              message:
+                type: string
+                example: País ya guardado
+  /paises/{id}:
+    patch:
+      tags:
+        - paises
+      summary: Editar país
+      operationId: updatePais
+      produces:
+        - application/json
+      parameters:
+        - name: User token
+          in: header
+          required: true
+          type: string
+          description: User JWT token (Bearer)
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Numeric ID of the country to update.
+        - in: body
+          name: body
+          description: >-
+            Editar país
+          required: true
+          schema:
+            $ref: '#/definitions/CreatePais'
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            properties:
+              message:
+                type: string
+                example: País actualizado
+        '400':
+          description: Unsuccessful
+          schema:
+            $ref: '#/definitions/Authenticate'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 404
+    delete: 
+      tags:
+        - paises
+      summary: Eliminar país
+      operationId: deletePais
+      produces:
+        - application/json
+      parameters:
+        - name: User token
+          in: header
+          required: true
+          type: string
+          description: User JWT token (Bearer)
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Numeric ID of the country to delete.
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: País eliminado
+        '400':
+          description: Unsuccessful
+          schema:
+            $ref: '#/definitions/Authenticate'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 404   
+  /paises/regiones/{id}:
+    get:
+      tags:
+        - paises
+      summary: Ver un país de una región
+      operationId: getPaises
+      produces:
+        - application/json
+      parameters:
+        - name: User token
+          in: header
+          required: true
+          type: string
+          description: User JWT token (Bearer)
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Numeric ID of the region that country belongs to.
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GetCountry'
+        '400':
+          description: Unsuccessful
+          schema:
+            $ref: '#/definitions/Authenticate'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 404
+  
+  /ciudades:
+    post:
+      tags:
+        - ciudades
+      summary: Crear ciudad
+      operationId: createCiudad
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Crear ciudad
+          required: true
+          schema:
+            $ref: '#/definitions/CreateCiudad'
+      responses:
+        '200':
+          description: Successful Register
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Ciudad agregada
+        '400':
+          description: Unsuccessful Register
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 400
+              message:
+                type: string
+                example: Ciudad ya guardada
+  /ciudades/{id}:
+    patch:
+      tags:
+        - ciudades
+      summary: Editar ciudad
+      operationId: updateCiudad
+      produces:
+        - application/json
+      parameters:
+        - name: User token
+          in: header
+          required: true
+          type: string
+          description: User JWT token (Bearer)
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Numeric ID of the city to update.
+        - in: body
+          name: body
+          description: >-
+            Editar país
+          required: true
+          schema:
+            $ref: '#/definitions/CreateCiudad'
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            properties:
+              message:
+                type: string
+                example: Ciudad actualizada
+        '400':
+          description: Unsuccessful
+          schema:
+            $ref: '#/definitions/Authenticate'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 404
+    delete: 
+      tags:
+        - ciudades
+      summary: Eliminar ciudad
+      operationId: deleteCiudad
+      produces:
+        - application/json
+      parameters:
+        - name: User token
+          in: header
+          required: true
+          type: string
+          description: User JWT token (Bearer)
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Numeric ID of the city to delete.
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Ciudad eliminada
+        '400':
+          description: Unsuccessful
+          schema:
+            $ref: '#/definitions/Authenticate'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 404   
+  /ciudades/paises/{id}:
+    get:
+      tags:
+        - ciudades
+      summary: Ver una ciudad de un país
+      operationId: getCiudades
+      produces:
+        - application/json
+      parameters:
+        - name: User token
+          in: header
+          required: true
+          type: string
+          description: User JWT token (Bearer)
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Numeric ID of the country that city belongs to.
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GetCity'
+        '400':
+          description: Unsuccessful
+          schema:
+            $ref: '#/definitions/Authenticate'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 404
+    
+  
+  /contactos/{by}:
+    get:
+      tags:
+        - contactos
+      summary: Ver contactos
+      operationId: getContactos
+      produces:
+        - application/json
+      parameters:
+        - name: User token
+          in: header
+          required: true
+          type: string
+          description: User JWT token (Bearer)
+        - in: path
+          name: by
+          type: integer
+          required: true
+          description: The parameter you want your contacts to be ordered by (nombre, interes, cargo, compania, pais)
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GetContactos'
+        '400':
+          description: Unsuccessful
+          schema:
+            $ref: '#/definitions/Authenticate'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 404
+    patch:
+      tags:
+        - contactos
+      summary: Editar contacto
+      operationId: updateContacto
+      produces:
+        - application/json
+      parameters:
+        - name: User token
+          in: header
+          required: true
+          type: string
+          description: User JWT token (Bearer)
+        - in: path
+          name: by
+          type: integer
+          required: true
+          description: Numeric ID of the contact to update.
+        - in: body
+          name: body
+          description: >-
+            Editar contacto
+          required: true
+          schema:
+            $ref: '#/definitions/CreateContacto'
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            properties:
+              message:
+                type: string
+                example: Contacto actualizado
+        '400':
+          description: Unsuccessful
+          schema:
+            $ref: '#/definitions/Authenticate'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 404
+    delete: 
+      tags:
+        - contactos
+      summary: Eliminar contacto
+      operationId: deleteContacto
+      produces:
+        - application/json
+      parameters:
+        - name: User token
+          in: header
+          required: true
+          type: string
+          description: User JWT token (Bearer)
+        - in: path
+          name: by
+          type: integer
+          required: true
+          description: Numeric ID of the contact to delete.
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Contacto eliminado
+        '400':
+          description: Unsuccessful
+          schema:
+            $ref: '#/definitions/Authenticate'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 404 
+  /contactos/contacto/{id}:
+    get:
+      tags:
+        - contactos
+      summary: Ver un sólo contacto
+      operationId: getContacto
+      produces:
+        - application/json
+      parameters:
+        - name: User token
+          in: header
+          required: true
+          type: string
+          description: User JWT token (Bearer)
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Numeric ID of the contact.
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GetContactos'
+        '400':
+          description: Unsuccessful
+          schema:
+            $ref: '#/definitions/Authenticate'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 404
+  /contactos: 
+    post: 
+      tags:
+        - contactos
+      summary: Crear contacto
+      operationId: createContacto
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Crear contacto
+          required: true
+          schema:
+            $ref: '#/definitions/CreateContacto'
+      responses:
+        '200':
+          description: Successful Register
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Contacto creado
+        '400':
+          description: Unsuccessful Register
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 400
+              message:
+                type: string
+                example: Contacto ya guardado
+
+    
+  /contactos/search/{by}:
+    post:
+      tags:
+        - contactos
+      summary: Ver contactos de una determinada búsqueda
+      operationId: getContactosSearch
+      produces:
+        - application/json
+      parameters:
+        - name: User token
+          in: header
+          required: true
+          type: string
+          description: User JWT token (Bearer)
+        - in: path
+          name: by
+          type: integer
+          required: true
+          description: The parameter you want your contacts to be ordered by (nombre, interes, cargo, compania, pais)
+        - in: body
+          name: body
+          description: The information used to search a specific contact
+          required: true
+          schema:
+            $ref: '#/definitions/CreateContacto'
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GetContactos'
+        '400':
+          description: Unsuccessful
+          schema:
+            $ref: '#/definitions/Authenticate'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 404
+  
+  /contactos/contacto_canales/{id}:
+    get:
+      tags:
+        - contactos
+      summary: Ver canales de un contacto
+      operationId: getContactoChannels
+      produces:
+        - application/json
+      parameters:
+        - name: User token
+          in: header
+          required: true
+          type: string
+          description: User JWT token (Bearer)
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Numeric ID of the contact.
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GetContactoChannels'
+        '400':
+          description: Unsuccessful
+          schema:
+            $ref: '#/definitions/Authenticate'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 404
+    
+  
+  /canales:
+    get:
+      tags:
+        - canales
+      summary: Ver todos los canales
+      operationId: getChannels
+      produces:
+        - application/json
+      parameters:
+        - name: User token
+          in: header
+          required: true
+          type: string
+          description: User JWT token (Bearer)
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GetChannels'
+        '400':
+          description: Unsuccessful
+          schema:
+            $ref: '#/definitions/Authenticate'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties:
+              status_code:
+                type: integer
+                format: int64
+                example: 404
+    
+definitions:
+  Authenticate:
+    type: object
+    properties:
+      message:
+        type: string
+        example: Header must contain JWT to verify identity.
+  Register:
+    type: object
+    properties:
+      nombre:
+        type: string
+        example: Fede
+      apellido:
+        type: string
+        example: Raimondo
+      email:
+        type: string
+        example: fraimondovargas@gmail.com
+      contrasenia:
+        type: string
+        example: password!13
+      admin:
+        type: integer
+        format: int64
+        example: 1
+  RegisterResponse:
+    type: object
+    properties:
+      message:
+        type: string
+        example: Nuevo usuario creado
+  Login:
+    type: object
+    properties:
+      email:
+        type: string
+        example: frai@gmail.com
+      contrasenia:
+        type: string
+        example: password!13
+  LoginResponse:
+    type: object
+    properties:
+      token:
+        type: string
+        example: >-
+          eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6InVzdWFyaW9kZW1vMjMiLCJpc0FkbWluIjowLCJpYXQiOjE1ODg1NTA2MjgsImV4cCI6MTU4ODYzNzAyOH0.OXF880nyOkmH31U5ZzZaMlfN9EaXCGrrPgECvq-mktk
+      admin: 
+        type: integer
+        format: int64
+        example: 1
+  GetUsers:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        example: 1
+      nombre:
+        type: string
+        example: Fede Raimondo
+      email:
+        type: string
+        example: fraimondovargas@email.com
+      admin:
+        type: integer
+        format: int64
+        example: 1
+  GetUser:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        example: 1
+      nombre:
+        type: string
+        example: Fede Raimondo
+      email:
+        type: string
+        example: fraimondovargas@email.com
+      contrasenia: 
+        type: string
+        example: 4d186321c1a7f0f354b297e8914ab240
+      admin:
+        type: integer
+        format: int64
+        example: 1
+  GetCompanias:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        example: 1
+      nombre:
+        type: string
+        example: Acamica
+      pais:
+        type: string
+        example: Argentina
+      email:
+        type: string
+        example: hola@acamica.com
+      direccion: 
+        type: string
+        example: Av. Corrientes 1233
+      telefono:
+        type: integer
+        format: int64
+        example: 45568899
+  GetRegiones:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        example: 1
+      nombre:
+        type: string
+        example: Sudamérica
+  GetCountry:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        example: 1
+      region_id:
+        type: integer
+        format: int64
+        example: 10
+      nombre:
+        type: string
+        example: Argentina
+  GetCity:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        example: 1
+      pais_id:
+        type: integer
+        format: int64
+        example: 10
+      nombre:
+        type: string
+        example: Buenos Aires
+  GetContactos:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        example: 1
+      nombre:
+        type: string
+        example: Fede Raimondo  
+      email:
+        type: string
+        example: fraimondovargas@email.com
+      cargo: 
+        type: string
+        example: Dev Full-Stack
+      interes:
+        type: integer
+        format: int64
+        example: 25
+      pais:
+        type: string
+        example: Argentina
+      region:
+        type: string
+        example: Sudamérica
+      compania:
+        type: string
+        example: Acamica
+  GetContactoChannels: 
+    type: object
+    properties:
+      canal:
+        type: string
+        example: Instagram
+      canalId:
+        type: integer
+        format: int64
+        example: 1
+      usuario: 
+        type: string
+        example: federai
+      preferencia:
+        type: string
+        example: Sin Preferencia
+  GetChannels: 
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        example: 1
+      nombre: 
+        type: string
+        example: Whatsapp
+  
+  UpdateUser:
+    type: object
+    properties:
+      nombre:
+        type: string
+        example: Fede raimondo
+      email:
+        type: string
+        example: fraimondovargas@email.com
+      contrasenia: 
+        type: string
+        example: 4d186321c1a7f0f354b297e8914ab240
+      admin:
+        type: integer
+        format: int64
+        example: 1
+        
+        
+  CreateRegion:
+    type: object
+    properties:
+      nombre:
+        type: string
+        example: Sudamérica
+        
+  CreatePais:
+    type: object
+    properties:
+      region_id:
+        type: integer
+        format: int64
+        example: 10
+      nombre:
+        type: string
+        example: Argentina
+  
+  CreateCiudad:
+    type: object
+    properties:
+        pais_id:
+          type: integer
+          format: int64
+          example: 3
+        nombre:
+          type: string
+          example: Buenos Aires
+        
+        
+  CreateCompanias:
+    type: object
+    properties:
+      nombre:
+        type: string
+        example: Acamica
+      pais:
+        type: string
+        example: Argentina
+      email:
+        type: string
+        example: hola@acamica.com
+      direccion: 
+        type: string
+        example: Av. Corrientes 1233
+      telefono:
+        type: integer
+        format: int64
+        example: 45568899
+        
+  CreateContacto:
+    type: object
+    properties:
+      nombre:
+        type: string
+        example: Fede
+      apellido:
+        type: string
+        example: Raimondo
+      email:
+        type: string
+        example: fraimondovargas@email.com
+      cargo: 
+        type: string
+        example: Dev Full-Stack
+      interes:
+        type: integer
+        format: int64
+        example: 25
+      direccion: 
+        type: string
+        example: Av. Duarte Quiros 1444
+      ciudad_id:
+        type: integer
+        format: int64
+        example: 8
+      compania_id:
+        type: integer
+        format: int64
+        example: 5
+
+
+
+  
+externalDocs:
+  description: GitHub Repository
+  url: 'https://github.com/federai/datawarehouse'
