@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="style/style.css"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <script src="https://kit.fontawesome.com/a59b91f74c.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <title>Region</title>
+    <script src="script/isAlreadyLogin.js"></script>
+  </head>
+  <body onload="isLogin()">
+    <nav class="nav">
+        <div class="logo">
+            <a href="index.html"><img src="img/logo.png" src="Logo"></a>
+        </div>
+
+        <div class="nav-items">
+            <ul class="nav-ul">
+                <li class="nav-item"><a href="index.html">Contactos</a></li>
+                <li class="nav-item"><a href="companias.html">Compañías</a></li>
+                <li class="nav-item" id="usuarioLi"><a href="verUsuarios.html">Usuarios</a></li>
+                <li class="nav-item active"><a href="#">Región/Ciudad</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="container region-header header-region d-flex justify-content-between mt-5">
+        <h2 class="title">Región/Ciudad</h2>
+        <button class="btn btn-outline-primary" id="agregarRegionBtn" onclick="agregarRegionModal()">Agregar</button>
+    </header>
+
+    <main class="container main-region">
+            <ul id="myUL">
+            
+            </ul>
+
+    </main>
+
+    <section class="modal-region" id="modal-region">
+        <div class="container container-region bg-light" id="canal">
+          <div class="row region-title text-light">
+            <h4 class="title p-3" id="modal-region-titulo">Agregar región</h4>
+            <button class="btn close-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
+          </div>
+  
+          <form id="agregarRegionForm">
+          <div class="row first-row">
+              <label for="r-nombre">
+                <p>Nombre</p>
+                <input type="text" id="r-nombre" tabindex="1" required>
+                <p id="emptyNameRegion" class="emptyName">No ingresó un nombre</p>
+                </label>
+                
+          </div>
+  
+          </form>
+          
+          <div class="btnFooter" id="btnFooter">
+            <button class="btn text-secondary"  onclick="closeModal()">Cancelar</button>
+            <button class="btn btn-secondary" id="agregarRegionADB" onclick="agregarRegion(this)">Agregar</button>
+          </div>
+        </div>
+     </section> 
+
+     <section class="modal-region" id="modal-pais">
+        <div class="container container-region bg-light">
+          <div class="row region-title text-light">
+            <h4 class="title p-3" id="modal-pais-titulo">Agregar país</h4>
+            <button class="btn close-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
+          </div>
+  
+          <form id="agregarPaisForm">
+          <div class="row first-row">
+              <label for="p-nombre">
+                <p>Nombre</p>
+                <input type="text" id="p-nombre" tabindex="1" required>
+                <p id="emptyNamePais" class="emptyName">No ingresó un nombre</p>
+                </label>
+                
+          </div>
+  
+          </form>
+          
+          <div class="btnFooter">
+            <button class="btn text-secondary"  onclick="closeModal()">Cancelar</button>
+            <button class="btn btn-secondary" id="agregarPaisADB" onclick="addPais(this)">Agregar</button>
+          </div>
+        </div>
+     </section> 
+
+
+    <section class="modal-region" id="modal-ciudad">
+        <div class="container container-region bg-light">
+          <div class="row region-title text-light">
+            <h4 class="title p-3" id="modal-ciudad-titulo">Agregar ciudad</h4>
+            <button class="btn close-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
+          </div>
+  
+          <form id="agregarCiudadForm">
+          <div class="row first-row">
+              <label for="c-nombre">
+                <p>Nombre</p>
+                <input type="text" id="c-nombre" tabindex="1" required>
+                <p id="emptyNameCiudad" class="emptyName">No ingresó un nombre</p>
+                </label>
+                
+          </div>
+  
+          </form>
+          
+          <div class="btnFooter">
+            <button class="btn text-secondary"  onclick="closeModal()">Cancelar</button>
+            <button class="btn btn-secondary" id="agregarCiudadADB" onclick="addCity(this)">Agregar</button>
+          </div>
+        </div>
+     </section> 
+    
+     <section class="modal-delete" id="modal-delete-pais">
+      <div class="main-delete">
+       <img src="img/eliminarContacto.png" alt="Eliminar contacto"/>
+       <h3 class="lead">¿Seguro que deseas eliminar este país?</h3>
+       <div class="btnEliminar">
+         <button class="btn btn-outline-primary" onclick="closeModal()">Cancelar</button>
+         <button class="btn btn-danger" onclick="deletePais()">Eliminar</button>
+       </div>
+ 
+      </div>
+ 
+    </section>
+
+    <section class="modal-delete" id="modal-delete-ciudad">
+      <div class="main-delete">
+       <img src="img/eliminarContacto.png" alt="Eliminar contacto"/>
+       <h3 class="lead">¿Seguro que deseas eliminar esta ciudad?</h3>
+       <div class="btnEliminar">
+         <button class="btn btn-outline-primary" onclick="closeModal()">Cancelar</button>
+         <button class="btn btn-danger" onclick="deleteCity()">Eliminar</button>
+       </div>
+ 
+      </div>
+ 
+    </section>
+
+    <script src="script/fetch/regiones.js"></script>
+    <script src="script/modal.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  </body>
+</html>

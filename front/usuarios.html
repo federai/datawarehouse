@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="style/style.css"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <script src="https://kit.fontawesome.com/a59b91f74c.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <title>Usuarios</title>
+    <script src="script/isAlreadyLogin.js"></script>
+  </head>
+  <body onload="isLogin()">
+    <nav class="nav">
+        <div class="logo">
+            <a href="index.html"><img src="img/logo.png" src="Logo"></a>
+        </div>
+
+        <div class="nav-items">
+            <ul class="nav-ul">
+                <li class="nav-item"><a href="index.html">Contactos</a></li>
+                <li class="nav-item"><a href="companias.html">Compañías</a></li>
+                <li class="nav-item active" id="usuarioLi"><a href="verUsuarios.html">Usuarios</a></li>
+                <li class="nav-item"><a href="region.html">Región/Ciudad</a></li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <main class="main-user">
+        <div class="container-user">
+            <h2 class="title">Crear Usuario</h2>
+
+            <form class="inputs">
+                <label for="user-name">
+                <p>Nombre</p>
+                <input type="text" id="user-name" placeholder="Nombre" tabindex="1" required/>
+                </label>
+
+                <label for="user-lastname">
+                <p>Apellido</p>
+                <input type="text" id="user-lastname" placeholder="Apellido" tabindex="2" required/>
+                </label>
+
+                <label for="user-email">
+                <p>Email</p>
+                <input type="email" id="user-email" placeholder="Email" tabindex="3" required/>
+                </label>
+                
+                <label for="user-perfil">
+                <p>Perfil</p>
+                <select id="user-perfil" name="user-perfil" tabindex="4" required>
+                    <option value="admin">Administrador</option>
+                    <option value="basic">Básico</option>
+                </select>
+                </label>
+
+                <label for="pass-user">
+                <p>Contraseña</p>
+                <input type="password" id="pass-user" placeholder="Contraseña" tabindex="5" required/>
+                </label>
+
+                <label for="pass-user-repeat">
+                <p>Repetir Contraseña</p>
+                <input type="password" id="pass-user-repeat" placeholder="Contraseña" tabindex="6" oninput="contraseniaRepetida(this)" required/>
+                </label>
+
+                <input type="submit" value="Crear" class="btn btn-outline-primary mb-2 align-self-center" tabindex="7" id="btnCrearUsuario">
+            </form>
+        </div>
+    </main>
+
+    <script src="script/fetch/crearUsuario.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  </body>
+</html>

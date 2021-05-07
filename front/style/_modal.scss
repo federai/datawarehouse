@@ -1,0 +1,452 @@
+//NUEVO CONTACTO/ EDITAR CONTACTO
+.modal-contacto {
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    display: none;  //flex
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.692);
+    .container-contacto {
+        overflow: scroll;
+        overflow-x: hidden;
+        min-height: 500px;
+        max-height: 500px;
+        width: 100%;
+    }
+    .contacto-title {
+        height: 130px;
+        background: $color1;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .close-btn {
+            color: white;
+            align-self: flex-start;
+            padding: 15px;
+            i {
+                font-size: 20px;
+            }
+        }
+    }
+    input:not(.custom-range), select{
+        border: 1px solid rgba(128, 128, 128, 0.534);
+        height: 35px;
+        border-radius: 5px;
+        color: rgba(7, 7, 7, 0.609);
+    }
+    input:focus {
+        color: black;
+    }
+    select:focus {
+        color: black;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+    }
+    .editar-contacto {
+        input, select {
+            color: black;
+        }
+    }
+
+    .first-row {
+        width: 99%;
+        height: 131px;
+        margin-top: -65px;
+        background: white;
+        border: 3px solid $color2;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-around;
+        margin-left: unset;
+        label {
+            padding: 5px;
+        }
+        .span-contacto {
+            color: #F03738;
+        }
+    }
+    .second-row {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        #new-pais, #new-ciudad, #new-direccion {
+            background-color:#e5e5e5;
+        }
+        #new-porcentaje {
+               margin-top: 30px;
+               margin-left: -40px;
+        }
+    }
+    .third-row {
+        width: 70%;
+        margin-left: 5px;
+        display: flex;
+        align-self: flex-start;
+        justify-content: space-around;
+        margin-bottom: 10px;
+        .new-cuenta, .new-preferencias {
+            background-color:#e5e5e5;
+        }
+        .btn {
+            height: 40px;
+            align-self: center;
+            margin-top: 20px;
+        }
+    }
+    .nueva-row {
+        width: 70%;
+        margin-left: 5px;
+        margin-bottom: 10px;
+        display: flex;
+        align-self: flex-start;
+        justify-content: space-around;
+    }
+    .btnFooter {
+        align-self: flex-end;
+        margin-top: 45px; 
+        .btn {
+            margin-bottom: 20px;
+        }
+        #agregarContactoBtn {
+            background: gray;
+            color: white;
+        }
+    }
+}
+
+
+
+//ELIMINAR CONTACTO
+.modal-delete { 
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    display: none;  //flex
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.692);
+    .main-delete {
+        width: 400px;
+        height: 350px;
+        background: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        img {
+            width: 150px;
+        }
+        h3 {
+            width: 95%;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .btnEliminar {
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            button {
+                width: 45%;
+                height: 40px;
+            }
+        }
+    }
+}
+
+//MODAL USUARIOS
+.modal-usuario {
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    display: none;  //flex
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.692);
+    .container-usuario {
+        height: 300px;
+        width: 100%;
+    }
+    .usuario-title {
+        height: 130px;
+        background: $color1;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .close-btn {
+            color: white;
+            align-self: flex-start;
+            padding: 15px;
+            i {
+                font-size: 20px;
+            }
+        }
+    }
+    input {
+        border: 1px solid rgba(128, 128, 128, 0.534);
+        height: 35px;
+        border-radius: 5px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .first-row {
+        width: 99%;
+        height: 131px;
+        margin-top: -65px;
+        background: white;
+        border: 3px solid $color2;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-around;
+        margin-left: unset;
+        .icon-user {
+            width: 85px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: -5px;
+            padding: 10px;
+            cursor: pointer;
+            .user {
+                font-size: 36px;
+                color: $color2;
+                border: 3px solid $color2;
+                border-radius: 50%;
+                padding: 20px;
+                position: relative;
+            }
+            .user::after{
+                content: "";
+                position: absolute;
+                background: $color2;
+                color: white;
+                padding: 5%;
+                border-radius: 50%;
+                bottom: 0;
+                right: 0px;
+                font-size: 13px;
+            }
+        }
+        label {
+            padding: 5px;
+        }
+    }
+   
+    .btnFooter {
+        align-self: flex-start;
+        margin-top: 45px; 
+        .btn {
+            margin-bottom: 20px;
+        }
+    }
+}
+
+//ELIMINAR CONTACTO
+.modal-delete { 
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    display: none;  //flex
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.692);
+    .main-delete {
+        width: 400px;
+        height: 350px;
+        background: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        img {
+            width: 150px;
+        }
+        h3 {
+            width: 95%;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .btnEliminar {
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            button {
+                width: 45%;
+                height: 40px;
+            }
+        }
+    }
+}
+
+//IMPORTAR CONTACTO
+.modal-import {
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    display: none;//flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.692);
+    .main-import {
+        width: 400px;
+        height: 350px;
+        background: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        img {
+            width: 150px;
+        }
+        h3 {
+            width: 95%;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .btnEliminar {
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            button {
+                width: 45%;
+                height: 40px;
+            }
+        }
+    }
+}
+
+//AGREGAR REGION
+
+.modal-region {
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    display: none;  //flex
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.692);
+    .container-region {
+        height: 300px;
+        width: 400px;
+    }
+    .region-title {
+        height: 130px;
+        background: $color1;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .close-btn {
+            color: white;
+            align-self: flex-start;
+            padding: 15px;
+            i {
+                font-size: 20px;
+            }
+        }
+    }
+    input{
+        border: 1px solid rgba(128, 128, 128, 0.534);
+        height: 35px;
+        border-radius: 5px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .first-row {
+        width: 100%;
+        margin-top: -65px;
+        background: white;
+        border: 3px solid $color2;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        margin-left: -15px;
+        label {
+            padding: 5px;
+            position: relative;
+            .emptyName {
+                display: none;
+                position: absolute;
+                width: 200px;
+                text-align: center;
+                height: 35px;
+                top: 100px;
+                left: -5px;
+                padding: 5px;
+                color: $color5;
+                background: $color12;
+                border-radius: 10px;
+                border: 1px solid $color5;
+            }
+        }
+
+      
+
+
+    }
+    .btnFooter {
+        align-self: flex-end;
+        margin-top: 45px; 
+        .btn {
+            margin-bottom: 20px;
+        }
+    }
+}
+
+// COMPANIAS
+#com-ciudad {
+    height: 35px;
+    border: 1px solid rgb(173, 173, 173);
+    border-radius: 5px;
+}

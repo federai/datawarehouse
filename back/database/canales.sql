@@ -1,0 +1,1 @@
+INSERT INTO canales (nombre) VALUES ('Teléfono'), ('Whatsapp'), ('Instagram'), ('Facebook'), ('Linkedin');

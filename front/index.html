@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="style/style.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <script src="https://kit.fontawesome.com/a59b91f74c.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <title>Contactos</title>
+    <script src="script/isAlreadyLogin.js"></script>
+</head>
+
+<body onload="isLogin()">
+    <nav class="nav">
+        <div class="logo">
+            <a href="#"><img src="img/logo.png" src="Logo"></a>
+        </div>
+
+        <div class="nav-items">
+            <ul class="nav-ul">
+                <li class="nav-item active"><a href="#">Contactos</a></li>
+                <li class="nav-item"><a href="companias.html">Compañías</a></li>
+                <li class="nav-item" id="usuarioLi"><a href="verUsuarios.html">Usuarios</a></li>
+                <li class="nav-item"><a href="region.html">Región/Ciudad</a></li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <section class="contactos">
+        <h2 class="title">Contactos</h2>
+
+        <div class="search-bar">
+            <button type="button" class="btn search-dropdown-btn"><i
+                    class="text-secondary fas fa-caret-down"></i></button>
+
+            <div class=" search-dropdown">
+                <form class="px-4 py-3">
+                    <div class="form-group mb-4 d-flex flex-row">
+                        <label for="nombre-search">Nombre del contacto</label>
+                        <input type="text" class="form-control" id="nombre-search"
+                            placeholder="Introduce el nombre del contacto">
+                    </div>
+                    <div class="form-group d-flex flex-row">
+                        <label for="cargo-search">Cargo</label>
+                        <input type="text" class="form-control" id="cargo-search"
+                            placeholder="Introduce el cargo del contacto">
+                    </div>
+
+                    <div class="select-div">
+                        <label for="pais-search ">País/Región</label>
+                        <select class="form-control" id="pais-search">
+                            <option value="any">Todos</option>
+                        </select>
+                    </div>
+
+                    <div class="select-div">
+                        <label for="compania-search">Compañía</label>
+                        <select class="form-control" id="compania-search">
+                            <option value="any">Todas</option>
+                        </select>
+                    </div>
+
+                    <div class="select-div">
+                        <label for="canal-search">Canal favorito</label>
+                        <select class="form-control" id="canal-search">
+                            <option value="any">Cualquiera</option>
+                            <option value="1">Teléfono</option>
+                            <option value="2">Whatsapp</option>
+                            <option value="3">Instagram</option>
+                            <option value="4">Facebook</option>
+                            <option value="5">Linkedin</option>
+                        </select>
+                    </div>
+
+                    <div class="select-div">
+                        <label for="interes-search">Interés</label>
+                        <select class="form-control" id="interes-search">
+                            <option value="any">Cualquiera</option>
+                            <option value="0">0%</option>
+                            <option value="25">25%</option>
+                            <option value="50">50%</option>
+                            <option value="75">75%</option>
+                            <option value="100">100%</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+
+            <button class="btn" id="search-btn" onclick="searchContactosPag(0, 10, 10, 1)"><i
+                    class="fas fa-search"></i></button>
+        </div>
+
+        <div class="botones float-right">
+            <button class="btn ml-1 rounded-0 add text-light" onclick="openModalNewContact()">Agregar contacto</button>
+        </div>
+    </section>
+
+    <div class="check-btn">
+        <button class="btn btn-cantidad"></button>
+        <button class="btn btn-eliminar" onclick="checkboxDeleteModal()">
+            <i class="fas fa-trash"></i>
+            Eliminar contacto</button>
+    </div>
+    <main class="container-fluid main-contactos">
+        <div class="header-contactos d-flex flex-row">
+            <div class="checkbox-div">
+                <label for="checkbox-contacto"></label>
+                <input type="checkbox" onClick="toggle(this)" />
+            </div>
+            <div class="primer-contacto d-flex" id="ordenarPorNombre">
+                <p>Contacto</p>
+                <div class="arrows-icon">
+                    <i class="fas fa-long-arrow-alt-up"></i>
+                    <i class="fas fa-long-arrow-alt-down"></i>
+                </div>
+
+            </div>
+
+            <div class="region d-flex" id="ordenarPorPais">
+                <p>País/Región</p>
+                <div class="arrows-icon">
+                    <i class="fas fa-long-arrow-alt-up"></i>
+                    <i class="fas fa-long-arrow-alt-down"></i>
+                </div>
+
+
+            </div>
+
+            <div class="compania d-flex" id="ordenarPorCompania">
+                <p>Compañía</p>
+                <div class="arrows-icon">
+                    <i class="fas fa-long-arrow-alt-up"></i>
+                    <i class="fas fa-long-arrow-alt-down"></i>
+                </div>
+
+
+            </div>
+
+            <div class="cargo d-flex" id="ordenarPorCargo">
+                <p>Cargo</p>
+                <div class="arrows-icon">
+                    <i class="fas fa-long-arrow-alt-up"></i>
+                    <i class="fas fa-long-arrow-alt-down"></i>
+                </div>
+            </div>
+
+
+            <div class="interes d-flex" id="ordenarPorInteres">
+                <p>Interés</p>
+                <div class="arrows-icon">
+                    <i class="fas fa-long-arrow-alt-up"></i>
+                    <i class="fas fa-long-arrow-alt-down"></i>
+                </div>
+
+            </div>
+
+            <div class="acciones">
+                <p>Acciones</p>
+            </div>
+
+        </div>
+
+        <div class="actual-contactos d-flex flex-column">
+
+
+        </div>
+
+
+    </main>
+
+    <footer class="container-fluid d-flex flex-row justify-content-between">
+        <div class="pagUno">
+            <p class="text-secondary">Filas por páginas</p>
+            <label for="pagination-filter"></label>
+            <select class="form-control" onchange="selectFilter(this)" id="pagination-filter">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+            </select>
+        </div>
+
+        <div class="pagDos text-secondary" id="pagDos">
+        </div>
+
+
+    </footer>
+
+    <section class="modal-contacto" id="modal-contacto">
+        <div class="container container-contacto bg-light" id="canal">
+            <div class="row contacto-title text-light">
+                <h4 class="title p-3" id="contacto-title">Nuevo Contacto</h4>
+                <button class="btn close-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </div>
+
+            <form id="newContactoForm">
+                <div class="row first-row">
+                    <label for="new-name">
+                        <p>Nombre<span class="span-contacto">*</span></p>
+                        <input type="text" id="new-name" name="nombre-contacto" onclick="cambiarBtnAgregar()"
+                            tabindex="1" required />
+                    </label>
+
+                    <label for="new-lastname">
+                        <p>Apellido<span class="span-contacto">*</span></p>
+                        <input type="text" id="new-lastname" name="apellido-contacto" tabindex="2" required />
+                    </label>
+
+                    <label for="new-cargo">
+                        <p>Cargo<span class="span-contacto">*</span></p>
+                        <input type="text" id="new-cargo" name="cargo-contacto" tabindex="3" required />
+                    </label>
+
+                    <label for="new-email">
+                        <p>Email<span class="span-contacto">*</span></p>
+                        <input type="email" id="user-email" name="email-contacto" tabindex="4" required />
+                    </label>
+
+                    <label for="new-compania">
+                        <p>Compañía<span class="span-contacto">*</span></p>
+                        <select id="new-compania" name="new-compania" tabindex="5" required>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="row second-row mt-3">
+                    <label for="new-region">
+                        <p>Región</p>
+                        <select id="new-region" name="new-region" oninput="mostrarPaises(this)" tabindex="6">
+                            <option value="" disabled selected>Seleccionar región</option>
+                        </select>
+                    </label>
+
+                    <label for="new-pais">
+                        <p>País</p>
+                        <select id="new-pais" name="new-pais" oninput="mostrarCiudades(this)" tabindex="7">
+                            <option valie="" disabled selected>Seleccionar país</option>
+                        </select>
+                    </label>
+
+                    <label for="new-ciudad">
+                        <p>Ciudad</p>
+                        <select id="new-ciudad" name="new-ciudad" oninput="cambiarColor()" tabindex="8">
+                            <option value="" disabled selected>Seleccionar ciudad</option>
+                        </select>
+                    </label>
+
+                    <label for="new-direccion">
+                        <p>Dirección</p>
+                        <input type="text" id="new-direccion" name="new-direccion" placeholder="Dirección"
+                            tabindex="9" />
+                    </label>
+
+                    <label for="new-range">
+                        <p>Interés</p>
+                        <input type="range" class="custom-range" id="new-range" value="0" tabindex="10">
+                    </label>
+                    <label for="new-porcentaje">
+                        <select id="new-porcentaje" name="new-porcentaje" oninput="cambiarColorBtn()">
+                            <option id="first-option" value="0">0%</option>
+                            <option id="option-25" value="25">25%</option>
+                            <option id="option-50" value="50">50%</option>
+                            <option id="option-75" value="75">75%</option>
+                            <option id="option-100" value="100">100%</option>
+                        </select>
+                    </label>
+
+                </div>
+
+                <div class="row third-row mt-3 d-flex justify-content-between" id="canal-div">
+                    <div class="nueva-row">
+                        <label for="new-canal-contacto-1">
+                            <p>Canal de Contacto </p>
+                            <select id="new-canal-contacto-1" class="1" name="new-canal-contacto"
+                                onclick="cuentaDeUsuario(this)">
+                                <option value="1" selected>Teléfono</option>
+                            </select>
+                        </label>
+
+                        <label for="new-cuenta-1">
+                            <p>Cuenta de usuario</p>
+                            <input type="text" id="new-cuenta-1" class="1" placeholder="@ejemplo" name="new-cuenta"
+                                onclick="preferencias(this)" />
+                        </label>
+
+                        <label for="new-preferencias-1">
+                            <p>Preferencias</p>
+                            <select id="new-preferencias-1" class="1" name="new-preferencias">
+                                <option value="Sin Preferencia">Sin Preferencia</option>
+                                <option value="Canal Favorito">Canal Favorito</option>
+                                <option value="No Molestar">No Molestar</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div class="nueva-row">
+                        <label for="new-canal-contacto-2">
+                            <p>Canal de Contacto </p>
+                            <select id="new-canal-contacto-2" class="2" name="new-canal-contacto"
+                                onclick="cuentaDeUsuario(this)">
+                                <option value="2" selected>Whatsapp</option>
+                            </select>
+                        </label>
+
+                        <label for="new-cuenta-2">
+                            <p>Cuenta de usuario</p>
+                            <input type="text" id="new-cuenta-2" class="2" placeholder="@ejemplo" name="new-cuenta"
+                                onclick="preferencias(this)" />
+                        </label>
+
+                        <label for="new-preferencias-2">
+                            <p>Preferencias</p>
+                            <select id="new-preferencias-2" class="2" name="new-preferencias">
+                                <option value="Sin Preferencia">Sin Preferencia</option>
+                                <option value="Canal Favorito">Canal Favorito</option>
+                                <option value="No Molestar">No Molestar</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div class="nueva-row">
+                        <label for="new-canal-contacto-3">
+                            <p>Canal de Contacto </p>
+                            <select id="new-canal-contacto-3" class="3" name="new-canal-contacto"
+                                onclick="cuentaDeUsuario(this)">
+                                <option value="3" selected>Instagram</option>
+                            </select>
+                        </label>
+
+                        <label for="new-cuenta-2">
+                            <p>Cuenta de usuario</p>
+                            <input type="text" id="new-cuenta-3" class="3" placeholder="@ejemplo" name="new-cuenta"
+                                onclick="preferencias(this)" />
+                        </label>
+
+                        <label for="new-preferencias-3">
+                            <p>Preferencias</p>
+                            <select id="new-preferencias-3" class="3" name="new-preferencias">
+                                <option value="Sin Preferencia">Sin Preferencia</option>
+                                <option value="Canal Favorito">Canal Favorito</option>
+                                <option value="No Molestar">No Molestar</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div class="nueva-row">
+                        <label for="new-canal-contacto-2">
+                            <p>Canal de Contacto </p>
+                            <select id="new-canal-contacto-4" class="4" name="new-canal-contacto"
+                                onclick="cuentaDeUsuario(this)">
+                                <option value="4" selected>Facebook</option>
+                            </select>
+                        </label>
+
+                        <label for="new-cuenta-2">
+                            <p>Cuenta de usuario</p>
+                            <input type="text" id="new-cuenta-4" class="4" placeholder="@ejemplo" name="new-cuenta"
+                                onclick="preferencias(this)" />
+                        </label>
+
+                        <label for="new-preferencias-4">
+                            <p>Preferencias</p>
+                            <select id="new-preferencias-4" class="4" name="new-preferencias">
+                                <option value="Sin Preferencia">Sin Preferencia</option>
+                                <option value="Canal Favorito">Canal Favorito</option>
+                                <option value="No Molestar">No Molestar</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div class="nueva-row">
+                        <label for="new-canal-contacto-5">
+                            <p>Canal de Contacto </p>
+                            <select id="new-canal-contacto-5" class="5" name="new-canal-contacto"
+                                onclick="cuentaDeUsuario(this)">
+                                <option value="5" selected>Linkedin</option>
+                            </select>
+                        </label>
+
+                        <label for="new-cuenta-5">
+                            <p>Cuenta de usuario</p>
+                            <input type="text" id="new-cuenta-5" class="5" placeholder="@ejemplo" name="new-cuenta"
+                                onclick="preferencias(this)" />
+                        </label>
+
+                        <label for="new-preferencias-5">
+                            <p>Preferencias</p>
+                            <select id="new-preferencias-5" class="5" name="new-preferencias">
+                                <option value="Sin Preferencia">Sin Preferencia</option>
+                                <option value="Canal Favorito">Canal Favorito</option>
+                                <option value="No Molestar">No Molestar</option>
+                            </select>
+                        </label>
+                    </div>
+
+                </div>
+
+                <div class="btnFooter" id="btnFooter">
+                    <button class="btn text-secondary" onclick="closeModal()">Cancelar</button>
+                    <button class="btn" id="agregarContactoBtn" onclick="agregarContacto()">Guardar Contacto</button>
+                </div>
+
+            </form>
+        </div>
+
+    </section>
+
+    <section class="modal-delete" id="modal-delete">
+        <div class="main-delete">
+            <img src="img/eliminarContacto.png" alt="Eliminar contacto" />
+            <h3 class="lead">¿Seguro que deseas eliminar los contactos seleccionados?</h3>
+            <div class="btnEliminar">
+                <button class="btn btn-outline-primary" onclick="closeModal()">Cancelar</button>
+                <button class="btn btn-danger" onclick="borrarContactoDeDB()">Eliminar</button>
+            </div>
+
+        </div>
+
+    </section>
+
+     <script src="script/modal.js"></script>
+    <script src="script/fetch/searchContactos.js"></script>
+    <script src="script/fetch/contactos.js"></script>
+    <script src="script/slider.js"></script>
+    <script src="script/dropdown.js"></script>
+    <script src="script/checkboxAll.js"></script>
+    <script src="script/agregarCanal.js"></script> 
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

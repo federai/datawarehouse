@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="style/style.css"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <script src="https://kit.fontawesome.com/a59b91f74c.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <title>Usuarios</title>
+    <script src="script/isAlreadyLogin.js"></script>
+  </head>
+  <body onload="isLogin()">
+    <nav class="nav">
+        <div class="logo">
+            <a href="index.html"><img src="img/logo.png" src="Logo"></a>
+        </div>
+
+        <div class="nav-items">
+            <ul class="nav-ul">
+                <li class="nav-item"><a href="index.html">Contactos</a></li>
+                <li class="nav-item"><a href="companias.html">Compañías</a></li>
+                <li class="nav-item active"><a href="#">Usuarios</a></li>
+                <li class="nav-item"><a href="region.html">Región/Ciudad</a></li>
+            </ul>
+
+        </div>
+    </nav>
+
+
+    <header class="container header-region d-flex justify-content-between mt-5">
+        <h2 class="title">Usuarios</h2>
+        <a href="usuarios.html"><button id="agregarUsuarioBtn" class="btn btn-outline-primary">Agregar</button></a>
+    </header>
+
+    <section class="container usuarios-section">
+        <div class="titulos">
+            <div class="nombre">Nombre</div>
+            <div class="email">Email</div>
+            <div class="perfil">Perfil</div>
+            <div class="acciones">Acciones</div>
+        </div>
+
+        <main class="ver-usuarios" id="ver-usuarios">
+        </main>
+
+    </section>
+
+    <footer class="container-fluid d-flex flex-row justify-content-between">
+      <div class="pagUno">
+        <p class="text-secondary">Filas por páginas</p>
+        <label for="pagination-filter"></label>
+        <select class="form-control" onchange="selectFilterUser(this)" id="pagination-filter" >
+            <option value="10" >10</option>
+            <option value="20" >20</option>
+            <option value="30" >30</option>
+        </select>
+      </div>
+      
+      <div class="pagDos text-secondary" id="pagDos">
+      </div>
+
+
+    </footer>
+
+    <section class="modal-usuario" id="modal-usuario">
+        <div class="container container-usuario bg-light" id="canal">
+          <div class="row usuario-title text-light">
+            <h4 class="title p-3">Editar Usuario</h4>
+            <button class="btn close-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
+          </div>
+  
+          <form id="editarUsuarioForm">
+          <div class="row first-row">
+              <label for="u-nombre">
+                <p>Nombre</p>
+                <input type="text" id="u-nombre" tabindex="1" required/>
+                </label>
+                
+                <label for="u-apellido">
+                <p>Apellido</p>
+                <input type="text" id="u-apellido" tabindex="2" required/>
+                </label>
+  
+                <label for="u-email">
+                <p>Email</p>
+                <input type="email" id="u-email" tabindex="3" required/>
+                </label>
+  
+                <label for="u-perfil">
+                  <p>Perfil</p>
+                    <select id="u-perfil" name="u-perfil" tabindex="4">
+                      <option value="Administrador">Administrador</option>
+                      <option value="Básico">Básico</option>
+                    </select>
+                  </label>
+
+                <label for="u-contra">
+                    <p>Contraseña</p>
+                    <input type="password" id="u-contra" tabindex="5" required/>
+                </label>
+          </div>
+  
+          </form>
+          
+          <div class="btnFooter" id="btnFooter">
+            <button class="btn text-secondary"  onclick="closeModal()">Cancelar</button>
+            <button class="btn btn-secondary" id="editarUsuarioenBD" onclick="editarUsuarioenBD(this)">Editar Usuario</button>
+          </div>
+        </div>
+     </section> 
+
+     <section class="modal-delete" id="modal-delete">
+      <div class="main-delete">
+       <img src="img/eliminarContacto.png" alt="Eliminar contacto"/>
+       <h3 class="lead">¿Seguro que deseas eliminar este usuario</h3>
+       <div class="btnEliminar" >
+         <button class="btn btn-outline-primary" onclick="closeModal()">Cancelar</button>
+         <button class="btn btn-danger" onclick="eliminarUsuario()">Eliminar</button>
+       </div>
+ 
+      </div>
+ 
+    </section>
+    
+    <script src="script/fetch/verUsuarios.js"></script>
+    <script src="script/modal.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  </body>
+</html>
